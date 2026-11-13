@@ -1,0 +1,26 @@
+digraph DataPreparation {
+  graph [rankdir=TB, bgcolor="white", pad=0.3, nodesep=0.3, ranksep=0.4,
+    fontname="Helvetica", fontsize=18, labelloc=t,
+    label="Unified Workflow: Data Preparation\nSequential stages with expected data-gap handling"];
+  node [shape=box, style="rounded,filled", fillcolor="#f8fafc", color="#94a3b8",
+    fontname="Helvetica", fontsize=12, margin="0.16,0.12"];
+  edge [color="#64748b", fontname="Helvetica", fontsize=10];
+  input [label="run.py: ticker + target fiscal quarter\nCutoff date (optional) + report date (required)", fillcolor="#dbeafe"];
+  identity [label="Validate request; resolve company identity\nDerive prior fiscal quarter"];
+  manifest [label="Create run ID and manifest\nNo existing input is authorized by default", fillcolor="#dbeafe"];
+  prices [label="1. Prices\nDownload stock + SPY; calculate price summary"];
+  transcript [label="2. Transcript\nSearch and extract prior-call candidates\nFind official date evidence (Apple adapter)\nClean, validate, rank and select"];
+  consensus [label="3. Consensus\nSearch and download historical previews\nValidate dates and event; extract EPS + revenue\nCurrent extraction adapter: StockStory wording"];
+  handling [label="For each dataset\nSuccess: check fresh output and request context; snapshot + SHA-256 authorization\nExpected unavailable data: record status and reason; continue\nUnexpected failure or context mismatch: abort", fillcolor="#fef3c7"];
+  guidance [label="Record structured guidance as unsupported\nExisting guidance files are not automatically authorized"];
+  saved [label="data/<TICKER>/FY<YEAR>_Q<N>/runs/<run_id>/\nmanifest.json + inputs/ snapshots\nConsensus proposal keeps its evidence and limitations", fillcolor="#dcfce7"];
+  prepare [shape=diamond, label="--prepare-only?", fillcolor="#fef3c7"];
+  finish [label="Finish preparation; inspect manifest\nNo OpenAI call", fillcolor="#dcfce7"];
+  next [label="Continue to generation eligibility check\nSee Preview Generation diagram", fillcolor="#ede9fe"];
+  input -> identity -> manifest -> prices -> transcript -> consensus -> guidance -> saved -> prepare;
+  prices -> handling [style=dashed, arrowhead=none];
+  transcript -> handling [style=dashed, arrowhead=none];
+  consensus -> handling [style=dashed, arrowhead=none];
+  prepare -> finish [label="Yes"];
+  prepare -> next [label="No"];
+}

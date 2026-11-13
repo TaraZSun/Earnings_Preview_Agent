@@ -1,0 +1,19 @@
+{
+  "ticker": "MSFT",
+  "requested_as_of": "2024-07-29",
+  "as_of": "2024-07-29",
+  "last_close": 426.73,
+  "return_1m_pct": -5.77,
+  "return_3m_pct": 5.02,
+  "benchmark": "SPY",
+  "benchmark_return_3m_pct": 7.18,
+  "high_52w": 468.35,
+  "low_52w": 309.45,
+  "avg_daily_volume_3m": 18551283,
+  "return_basis": "Close, unadjusted; excludes dividend income",
+  "return_windows_trading_days": {
+    "1m": 21,
+    "3m": 63
+  },
+  "source": "Yahoo Finance via yfinance"
+}

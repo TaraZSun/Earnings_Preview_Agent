@@ -1,0 +1,31 @@
+digraph PreviewGeneration {
+  graph [rankdir=TB, bgcolor="white", pad=0.3, nodesep=0.35, ranksep=0.35,
+    fontname="Helvetica", fontsize=18, labelloc=t,
+    label="Unified Workflow: Preview Generation\nManifest-authorized inputs; OpenAI generation"];
+  node [shape=box, style="rounded,filled", fillcolor="#f8fafc", color="#94a3b8",
+    fontname="Helvetica", fontsize=12, margin="0.16,0.12"];
+  edge [color="#64748b", fontname="Helvetica", fontsize=10];
+  manifest [label="Prepared run manifest\nDataset statuses, snapshot paths, hashes and provenance", fillcolor="#dbeafe"];
+  core [shape=diamond, fillcolor="#fef3c7", label="Consensus OR transcript\navailable / partial?"];
+  skip [label="Record generation_status: skipped\nNo usable core data; no OpenAI call", fillcolor="#fee2e2"];
+  pipeline [label="Wrapper invokes pipeline.py --manifest <path>\nMOCK=1 selects local inputs; model calls remain enabled"];
+  gather [label="Validate manifest identity and dates\nRead only authorized inputs; verify paths and SHA-256\nValidate dataset context; record unavailable data as gaps"];
+  abort [label="Stop and record aborted workflow\nDo not replace inputs with older case files", fillcolor="#fee2e2"];
+  data [label="Gather consensus, prices, transcript and gaps\nStructured guidance is unsupported in current wrapper"];
+  prompt [label="Load prompts/earnings_preview.md\nSupply gathered JSON and analysis instructions"];
+  model [label="Call OpenAI to write an English preview", fillcolor="#ede9fe"];
+  length [shape=diamond, label="More than 300 words?", fillcolor="#fef3c7"];
+  rewrite [label="Request one shorter rewrite"];
+  checks [label="Check numeric tokens against supplied data\nFlag unmatched numbers and remaining length overshoot\nReview aids; not factual verification"];
+  output [label="Wrapper saves output/<ticker>_Q<N>_<YEAR>_<run_id>.md\nRecord generation_status: completed and output path", fillcolor="#dcfce7"];
+  manifest -> core;
+  core -> skip [label="No"];
+  core -> pipeline [label="Yes"];
+  pipeline -> gather;
+  gather -> abort [label="Invalid context / integrity"];
+  gather -> data [label="Checks pass"];
+  data -> prompt -> model -> length;
+  length -> rewrite [label="Yes"];
+  length -> checks [label="No"];
+  rewrite -> checks -> output;
+}

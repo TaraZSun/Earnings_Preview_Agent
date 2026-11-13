@@ -1,0 +1,27 @@
+{
+  "ticker": "MSFT",
+  "quarter": "Q4 2024",
+  "source_quarter": "Q3 2024",
+  "currency": "USD",
+  "unit": "billion",
+  "basis": "reported revenue",
+  "source": "Microsoft FY2024 Q3 earnings call",
+  "source_url": "https://www.microsoft.com/en-us/investor/events/FY-2024/earnings-fy-2024-q3",
+  "segments": [
+    {
+      "name": "Productivity and Business Processes",
+      "low": 19.9,
+      "high": 20.2
+    },
+    {
+      "name": "Intelligent Cloud",
+      "low": 28.4,
+      "high": 28.7
+    },
+    {
+      "name": "More Personal Computing",
+      "low": 15.2,
+      "high": 15.6
+    }
+  ]
+}

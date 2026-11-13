@@ -1,0 +1,36 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+wheels/
+
+# Virtual environments
+.venv/
+venv/
+
+# Local tooling
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.DS_Store
+
+# Local datasets: only include the Microsoft example
+/data/*
+!/data/MSFT/
+/data/MSFT/*
+!/data/MSFT/FY2024_Q4/
+
+# Exclude run records and snapshots
+/data/**/runs/
+
+# Generated outputs: retain Microsoft examples
+/output/*
+!/output/msft_fy2024_q4_preview*.md

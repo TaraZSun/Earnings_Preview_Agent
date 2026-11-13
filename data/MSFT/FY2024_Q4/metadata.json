@@ -1,0 +1,11 @@
+{
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "MSFT",
+  "benchmark": "SPY",
+  "start_inclusive": "2023-07-31",
+  "end_exclusive": "2024-07-30",
+  "requested_as_of": "2024-07-29",
+  "last_common_trading_date": "2024-07-29",
+  "auto_adjust": false,
+  "downloaded_at_utc": "2026-11-13T04:53:33.138489+00:00"
+}
